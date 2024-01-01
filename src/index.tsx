@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import ScanProcessingJS from "./ScanProcessingJS";
+// import ScanProcessingJS from "./ScanProcessingJS";
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(
@@ -10,8 +10,8 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    {/* <App /> */}
-    <ScanProcessingJS />
+    <App />
+    {/* <ScanProcessingJS /> */}
   </React.StrictMode>
 );
 
