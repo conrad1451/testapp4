@@ -1,7 +1,6 @@
 // I WILL NOT BE CONVERTING THIS TO A DEVBOX. MAYBE LATER. GUESS
 // I JUST GOTTA USE BROWSER DEV TOOLS TO GET MY CONSOLE LOGS
 
-
 import React from "react";
 // import auth from "./auth";
 // import Popup from "reactjs-popup";
@@ -53,7 +52,6 @@ function deepCopy<T>(instance: T): T {
   return instance;
 }
 
-
 function isASubstrCaseSensitive(str: string, subStr: string) {
   return str.indexOf(subStr) !== -1;
 }
@@ -61,7 +59,6 @@ function isASubstrCaseSensitive(str: string, subStr: string) {
 function isASubstr(str: string, subStr: string) {
   return isASubstrCaseSensitive(str.toLowerCase(), subStr.toLowerCase());
 }
-
 
 function anyAreSubStr(str: string, arrayOfSubStr: string[]) {
   let anyAreSubstr = false;
@@ -150,8 +147,7 @@ function lowerCasingTestSuite(thisLine: string) {
   // );
 }
 
- 
- 
+
 
 function createNewText(anArrayOfLines: string[]) {
   // onlyBlanks();
@@ -171,28 +167,25 @@ function createNewText(anArrayOfLines: string[]) {
       let tmpStr = line.trim();
       // tmpStr.trim
 
-      if(tmpStr[0] === "/" || tmpStr[0] === "*")
-      {
+      if (tmpStr[0] === "/" || tmpStr[0] === "*") {
         ++numCommentLines;
-      }
-      else
-      {
-        let isPotentialFunction = isASubstr(tmpStr, "var") && isASubstr(tmpStr, "function");
-        
-        
-        if(isPotentialFunction){
- 
+      } else {
+        let isPotentialFunction =
+          isASubstr(tmpStr, "var") && isASubstr(tmpStr, "function");
 
+        if (isPotentialFunction) {
           let posVarKeyword = tmpStr.indexOf("var");
           let posFunctionKeyword = tmpStr.indexOf(" = function");
 
           isVerifiedFunction = posVarKeyword < posFunctionKeyword;
 
-          if(isVerifiedFunction)
-          {
-          let functionName = tmpStr.substring(posVarKeyword+3, posFunctionKeyword)
-          listOfFunctions.push([numFunctions, functionName]);
-          ++numFunctions;
+          if (isVerifiedFunction) {
+            let functionName = tmpStr.substring(
+              posVarKeyword + 3,
+              posFunctionKeyword
+            );
+            listOfFunctions.push([numFunctions, functionName]);
+            ++numFunctions;
           }
         }
         ++numContentLines;
@@ -208,9 +201,13 @@ function createNewText(anArrayOfLines: string[]) {
   console.log(newArrayOfLines);
   console.log("and here are the stats for the input");
 
-  let programScanResults = "content lines: " + String(numContentLines)
-  + " | comment lines: " + String(numCommentLines) 
-  + " | blank lines: " + String(numBlankLines);
+  let programScanResults =
+    "content lines: " +
+    String(numContentLines) +
+    " | comment lines: " +
+    String(numCommentLines) +
+    " | blank lines: " +
+    String(numBlankLines);
 
   return [newArrayOfLines, programScanResults, listOfFunctions];
 }
@@ -350,7 +347,7 @@ function isAFloatingPoint(str: string) {
 function isANumber(str: string) {
   return isAnInteger(str) || isAFloatingPoint(str);
 }
- 
+
 
 const ScanProcessingJS: React.FC = () => {
   const [list, setList] = useState<any[]>([]); // source: https://www.telerik.com/blogs/getting-started-typescript-react
@@ -368,12 +365,11 @@ const ScanProcessingJS: React.FC = () => {
     // arrayOfLines is array where every element is string of one line
 
     let thetmp1 = createNewText(arrayOfLines);
-    // let brobro = thetmp1[0]; 
+    // let brobro = thetmp1[0];
     // console.log("THIS IS THE BRO")
     // console.log(brobro);
 
     // let organizedData = produceOrganizedData(arrayOfLines);
- 
 
     let listAsText = "List of functions in the program:\n\n\n";
 
@@ -387,54 +383,47 @@ const ScanProcessingJS: React.FC = () => {
     let recipeFunctions = [];
     let otherFunctions = [];
 
-    for(let m = 0; m < fullFunctionList.length; ++m)
-    {
+    for (let m = 0; m < fullFunctionList.length; ++m) {
       let curFunction = fullFunctionList[m];
       // listAsText += (String(curFunction[0]) + "." + curFunction[1]);
       // listAsText += "\n";
 
       let functionName = curFunction[1];
 
-      if(isASubstr(functionName, "draw"))
-      {
+      if (isASubstr(functionName, "draw")) {
         drawFunctions.push(functionName);
-      }
-      else if(isASubstr(functionName, "recipe"))
-      {
+      } else if (isASubstr(functionName, "recipe")) {
         recipeFunctions.push(functionName);
-      }
-      else
-      {
+      } else {
         otherFunctions.push(functionName);
       }
-
     }
 
-    for (let n = 0; n < drawFunctions.length; ++n)
-    {
+    for (let n = 0; n < drawFunctions.length; ++n) {
       let curFunction = drawFunctions[n];
       textForDrawFunctions += curFunction;
       textForDrawFunctions += "\n";
     }
-    for (let n = 0; n < recipeFunctions.length; ++n)
-    {
+    for (let n = 0; n < recipeFunctions.length; ++n) {
       let curFunction = recipeFunctions[n];
       textForRecipeFunctions += curFunction;
       textForRecipeFunctions += "\n";
     }
-    for (let n = 0; n < otherFunctions.length; ++n)
-    {
+    for (let n = 0; n < otherFunctions.length; ++n) {
       let curFunction = otherFunctions[n];
       textForOtherFunctions += curFunction;
       textForOtherFunctions += "\n";
     }
 
-    let outputMessage = "Overall Scan:\n\n" + thetmp1[1] +"\n\n------------------------------------------------------------\n\n";
+    let outputMessage =
+      "Overall Scan:\n\n" +
+      thetmp1[1] +
+      "\n\n------------------------------------------------------------\n\n";
     outputMessage += listAsText;
     outputMessage += textForDrawFunctions;
-    outputMessage += "\n\n\n"
+    outputMessage += "\n\n\n";
     outputMessage += textForRecipeFunctions;
-    outputMessage += "\n\n\n"
+    outputMessage += "\n\n\n";
     outputMessage += textForOtherFunctions;
 
     setText(outputMessage);
@@ -450,7 +439,7 @@ const ScanProcessingJS: React.FC = () => {
 
   let randomList = [
     { name: "test", values: ["d", "e", "f"] },
-    { name: "test2", values: ["a", "b", "c"] }
+    { name: "test2", values: ["a", "b", "c"] },
   ];
 
   function myCallBack() {
@@ -467,7 +456,10 @@ const ScanProcessingJS: React.FC = () => {
     <section className="line-page">
       <h1>Count Lines of Code</h1>
 
-      <p>Counts the lines of code in any given program written in Processing</p>
+      <p>
+        Counts the lines of code in any given program written in the Khan
+        Academy variant of Processing
+      </p>
       <form onSubmit={handleSubmit}>
         <textarea
           name="csv"
@@ -486,7 +478,7 @@ const ScanProcessingJS: React.FC = () => {
       ></textarea>
     </section>
   );
-
 };
 
+// export default GenerateRawWeek;
 export default ScanProcessingJS;
